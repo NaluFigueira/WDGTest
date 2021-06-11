@@ -44,8 +44,11 @@ function UsersList() {
   }
 
   function deleteUser(user) {
-    setLoading(true);
-    sendRequest(`users/${user.id}`,"DELETE", null,() => userRemoved(user),null,null);
+    const confirmation = window.confirm("Are you sure you want to delete this user?");
+    if(confirmation) {
+      setLoading(true);
+      sendRequest(`users/${user.id}`,"DELETE", null,() => userRemoved(user));
+    }
   }
 
   function editUser(userId) {

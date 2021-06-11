@@ -35,10 +35,17 @@ export default function sendRequest(route, method, body, successCallback = null,
     if(method !== "GET") {
         config.body = JSON.stringify(body);
     }
+
+    if(method === "DELETE") {
+        config.headers = undefined;
+    }
     
-    fetch(baseURL+route+"?delay=2&"+queryParams, config).then(async (response) => {
-        let formatedResponse = await response.json();
-        if(response.status === 200) {
+    fetch(baseURL+route+"?delay=2"+(queryParams ? `&${queryParams}`: ''), config).then(async (response) => {
+        let formatedResponse = {}
+        if(method !== "DELETE") {
+            formatedResponse = await response.json();
+        }
+        if(response.status === 200 || response.status === 204) {
             if(route === "login") {
                 api.saveToken(formatedResponse.token);
             } 
