@@ -13,14 +13,16 @@ function UsersList() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
+
   function turnLoadingOff() {
     setLoading(false);
   }
 
   useEffect(() => {
     setLoading(true);
+    history.push(`/users?page=${page}`)
     sendRequest(`users?page=${page}`,"GET", null,setData,null,turnLoadingOff);
-  }, [page])
+  }, [page, history])
 
   function setData(response) {
       setTotalNumberOfPages(response.total_pages);
@@ -37,13 +39,12 @@ function UsersList() {
     sendRequest(`users/${user.id}`,"DELETE", null,() => userRemoved(user),null,null);
   }
 
-  function goToHomePage() {
-    history.push("/login");
+  function editUser(userId) {
+    history.push(`/users/${userId}`);
   }
 
   function goToPage(pageNumber) {
     setPage(pageNumber);
-
   }
 
   return(
@@ -63,7 +64,7 @@ function UsersList() {
                             <span>{user.first_name} {user.last_name}</span>
                             <span>{user.email}</span>
                             <div>
-                                <Button title={"Edit"} onClick={goToHomePage} type={"link-button"} />
+                                <Button title={"Edit"} onClick={() => editUser(user.id)} type={"link-button"} />
                                 <Button title={"Remove"} onClick={() => deleteUser(user)} type={"link-button"} color={colors.red} />
                             </div>
                         </UserContainer>

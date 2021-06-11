@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { FormContainer, Container } from './styles';
 import Input from '../../components/Input/Input';
@@ -7,8 +7,8 @@ import sendRequest from '../../utils/fetch';
 import { useHistory } from 'react-router-dom';
 
 function Login() {
-  const [email, setEmail] = useState("eve.holt@reqres.in");
-  const [password, setPassword] = useState("cityslicka");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({
     email: "",
     password: ""
@@ -44,9 +44,9 @@ function Login() {
   }
 
   function handleSubmit() {
-    setLoading(true);
     let hasErrors = validateFields();
     if(!hasErrors) {
+      setLoading(true);
       let body = {
         email,
         password
@@ -54,6 +54,18 @@ function Login() {
       sendRequest("login", "POST", body, goToUsersList, null,  stopLoading);
     }
   }
+
+  useEffect(() => {
+    let errorsCopy = {...errors};
+    errorsCopy.email = "";
+    setErrors(errorsCopy);
+  }, [email])
+
+  useEffect(() => {
+    let errorsCopy = {...errors};
+    errorsCopy.password = "";
+    setErrors(errorsCopy);
+  }, [password])
 
   return (
     <Container>
