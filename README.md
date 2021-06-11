@@ -58,10 +58,10 @@ To clone and run this application, you'll need [Git](https://git-scm.com), [Node
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/NaluFigueira/HashGame
+$ git clone https://github.com/NaluFigueira/WDGTest
 
 # Go into the repository
-$ cd HashGame
+$ cd WDGTest
 
 # Install dependencies
 $ npm install
