@@ -27,16 +27,23 @@ export default function sendRequest(route, method, body, successCallback = null,
         headers["Authorization"] = `Bearer ${token}`;
     }
 
-    fetch(baseURL+route, {
+    let config = {
         method,
         headers,
-        body: JSON.stringify(body),
-    }).then(async (response) => {
+    }
+
+    if(method !== "GET") {
+        config.body = JSON.stringify(body);
+    }
+    
+    fetch(baseURL+route).then(async (response) => {
         let formatedResponse = await response.json();
         if(response.status === 200) {
             if(route === "login") {
                 api.saveToken(formatedResponse.token);
-            } else if(successCallback){
+            } 
+            
+            if(successCallback){
                 successCallback(formatedResponse);
             }
         } else {

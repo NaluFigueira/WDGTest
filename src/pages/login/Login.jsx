@@ -4,6 +4,7 @@ import { FormContainer, Container } from './styles';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import sendRequest from '../../utils/fetch';
+import { useHistory } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState("eve.holt@reqres.in");
@@ -13,6 +14,7 @@ function Login() {
     password: ""
   });
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   function checkIfRequiredFieldIsFilled(field, fieldName, labelName, errorsCopy) {
     if(!field) {
@@ -33,6 +35,10 @@ function Login() {
     return checkIfThereAreErrors(errorsCopy);
   }
 
+  function goToUsersList() {
+    history.push("/users");
+  }
+
   function stopLoading() {
     setLoading(false);
   }
@@ -45,7 +51,7 @@ function Login() {
         email,
         password
       }
-      sendRequest("login", "POST", body, null, null,  stopLoading);
+      sendRequest("login", "POST", body, goToUsersList, null,  stopLoading);
     }
   }
 

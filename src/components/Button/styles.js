@@ -6,7 +6,7 @@ export const CustomButton = styled.button`
     margin: 4px 0px;
     padding: 8px 8px;
     font-size: 16px;
-    color:  white;
+    color:  ${props => props.color || 'white'};
     border: none;
     cursor: pointer;
 
@@ -14,9 +14,9 @@ export const CustomButton = styled.button`
         props => props.type === "link-button" && css`
             width: auto;
             background-color: white;
-            color: ${props => props.theme.secondary};
+            color: ${props => props.color || props.theme.secondary};
             border: none;
-            border-bottom: 1px solid ${props => props.theme.secondary}
+            border-bottom: 1px solid ${props => props.color || props.theme.secondary}
         `
     }
 `;
