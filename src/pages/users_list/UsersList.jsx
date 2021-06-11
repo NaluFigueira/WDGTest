@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import sendRequest from '../../utils/fetch';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { UserContainer, ListContainer, PageCounter } from './styles';
 import colors from '../../theme/colorPalette';
 import Button from '../../components/Button/Button';
@@ -12,17 +12,26 @@ function UsersList() {
   const [totalNumberOfPages, setTotalNumberOfPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-
+  const { search } = useLocation();
+  
 
   function turnLoadingOff() {
     setLoading(false);
   }
 
   useEffect(() => {
-    setLoading(true);
     history.push(`/users?page=${page}`)
-    sendRequest(`users?page=${page}`,"GET", null,setData,null,turnLoadingOff);
   }, [page, history])
+
+  useMemo(() => {
+    const query = new URLSearchParams(search);
+    const currentPage = query.get('page');
+    if(!isNaN(parseInt(currentPage))) {
+      setPage(Number(currentPage))
+      setLoading(true);
+      sendRequest(`users`,"GET", null,setData,null,turnLoadingOff, `page=${currentPage}`);
+    }
+  }, [search])
 
   function setData(response) {
       setTotalNumberOfPages(response.total_pages);

@@ -73,7 +73,6 @@ function EditUser() {
 
   function handleSubmit() {
     let hasErrors = validateFields();
-    console.log(hasErrors)
     if(!hasErrors) {
         setLoading(true);
         let body = {

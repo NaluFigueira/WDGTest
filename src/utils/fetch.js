@@ -15,7 +15,7 @@ function Api (){
     }
 }
 
-export default function sendRequest(route, method, body, successCallback = null, errorCallback = null, requestFinishedCallback = null) {
+export default function sendRequest(route, method, body, successCallback = null, errorCallback = null, requestFinishedCallback = null, queryParams = "") {
     let headers = new Headers({
         "Content-Type": "application/json"
     });
@@ -24,7 +24,7 @@ export default function sendRequest(route, method, body, successCallback = null,
     const token = api.getToken();
 
     if(token) {
-        headers["Authorization"] = `Bearer ${token}`;
+        headers.set("Authorization", `Bearer ${token}`);
     }
 
     let config = {
@@ -36,7 +36,7 @@ export default function sendRequest(route, method, body, successCallback = null,
         config.body = JSON.stringify(body);
     }
     
-    fetch(baseURL+route).then(async (response) => {
+    fetch(baseURL+route+"?delay=2&"+queryParams, config).then(async (response) => {
         let formatedResponse = await response.json();
         if(response.status === 200) {
             if(route === "login") {

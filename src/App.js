@@ -13,7 +13,7 @@ function App() {
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
               <Route path="/users/:id" component={EditUser} />
-              <Route path="/users" component={UsersList} />
+              <Route path="/users" component={(props) => <UsersList {...props} />} />
               <Route component={NotFound} />
           </Switch>
       </BrowserRouter>
