@@ -2,9 +2,9 @@ import React from 'react';
 
 import { CustomButton } from './styles';
 
-function Button({title, onClick, loading}) {
+function Button({title, onClick, loading, type}) {
   return (
-    <CustomButton disabled={loading} onClick={onClick}>
+    <CustomButton type={type} disabled={loading} onClick={onClick}>
         {loading ? "Carregando..." : title}
     </CustomButton>
   );

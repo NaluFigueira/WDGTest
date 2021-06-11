@@ -33,19 +33,19 @@ function Login() {
     return checkIfThereAreErrors(errorsCopy);
   }
 
-  function loggedIn(response) {
+  function stopLoading() {
     setLoading(false);
-    console.log(response);
   }
 
   function handleSubmit() {
     setLoading(true);
     let hasErrors = validateFields();
     if(!hasErrors) {
-      sendRequest("login", "POST", {
+      let body = {
         email,
         password
-      }, loggedIn)
+      }
+      sendRequest("login", "POST", body, null, null,  stopLoading);
     }
   }
 
@@ -71,7 +71,7 @@ function Login() {
             onChange={setPassword}
             errorMessage={errors.password}
           />
-          <Button title={"Entrar"} onClick={handleSubmit} loading={loading}/>
+          <Button title={"Sign in"} onClick={handleSubmit} loading={loading}/>
       </FormContainer>
     </Container>
   );

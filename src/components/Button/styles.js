@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const CustomButton = styled.button`
     width: 100%;
@@ -9,4 +9,14 @@ export const CustomButton = styled.button`
     color:  white;
     border: none;
     cursor: pointer;
+
+    ${
+        props => props.type === "link-button" && css`
+            width: auto;
+            background-color: white;
+            color: ${props => props.theme.secondary};
+            border: none;
+            border-bottom: 1px solid ${props => props.theme.secondary}
+        `
+    }
 `;

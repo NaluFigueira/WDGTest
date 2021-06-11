@@ -15,7 +15,7 @@ function Api (){
     }
 }
 
-export default function sendRequest(route, method, body, successCallback) {
+export default function sendRequest(route, method, body, successCallback = null, errorCallback = null, requestFinishedCallback = null) {
     let headers = new Headers({
         "Content-Type": "application/json"
     });
@@ -36,7 +36,7 @@ export default function sendRequest(route, method, body, successCallback) {
         if(response.status === 200) {
             if(route === "login") {
                 api.saveToken(formatedResponse.token);
-            } else {
+            } else if(successCallback){
                 successCallback(formatedResponse);
             }
         } else {
@@ -44,6 +44,13 @@ export default function sendRequest(route, method, body, successCallback) {
         }
     }).catch((error) => {
         alert(error);
+        if(errorCallback) {
+            errorCallback(error)
+        }
+    }).finally(() => {
+        if(requestFinishedCallback) {
+            requestFinishedCallback()
+        }
     })
 }
 
