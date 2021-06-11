@@ -54,7 +54,7 @@ This project was developed with the following technologies and tools:
 
 ## :information_source: How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com), [Node.js v14.17.0][nodejs] or higher + [npm v3.10.10][https://www.npmjs.com/get-npm] or higher installed on your computer. From your command line:
+To clone and run this application, you'll need [Git](https://git-scm.com), [Node.js v14.17.0][nodejs] or higher + [npm v3.10.10](https://www.npmjs.com/get-npm) or higher installed on your computer. From your command line:
 
 ```bash
 # Clone this repository
